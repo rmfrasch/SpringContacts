@@ -37,6 +37,20 @@ public class WebController {
 		return "results";
 	}
 	
+	@GetMapping("/edit/{id}")
+
+	public String showUpdateForm(@PathVariable("id") int id, Model model) {
+
+	    Contact c = repo.findById((long) id)
+
+	      .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+	    model.addAttribute("contact", c);
+
+	    return "update";
+
+	}
+	
 	@PostMapping("/update/{id}")
 	public String updateUser(@PathVariable("id")long id, @Valid Contact c, BindingResult result, Model model) {
 		if(result.hasErrors()) {
